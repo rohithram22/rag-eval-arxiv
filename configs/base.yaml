@@ -41,9 +41,14 @@ corpus:
     - "2309.15217"   # RAGAS
     - "2312.10997"   # RAG survey (Gao et al.)
 
+parsing:
+  drop_references: true        # reference lists match queries but contain no answers
+  header_footer_margin: 0.06   # drop short text blocks in the top/bottom 6% of a page
+
 chunking:
-  chunk_size: 512      # tokens per chunk
-  chunk_overlap: 64    # tokens shared between consecutive chunks
+  chunk_size: 512      # tokens per chunk, counted with the EMBEDDING model's tokenizer
+  chunk_overlap: 64    # tokens shared between consecutive chunks (~1/8 of size)
+  include_title: true  # prepend "title: ..." to each chunk's embedded/LLM text
 
 embedding:
   model_name: BAAI/bge-small-en-v1.5
