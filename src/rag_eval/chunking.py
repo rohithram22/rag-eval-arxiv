@@ -150,3 +150,17 @@ def node_to_record(node: TextNode) -> dict:
         "text": node.text,
         "embed_text": node.get_content(metadata_mode=MetadataMode.EMBED),
     }
+
+
+def record_to_node(rec: dict, include_title: bool = True) -> TextNode:
+    """Inverse of node_to_record (used when loading a cached index)."""
+    hidden = ["arxiv_id"] + ([] if include_title else ["title"])
+    return TextNode(
+        id_=rec["id"],
+        text=rec["text"],
+        metadata={"arxiv_id": rec["arxiv_id"], "title": rec["title"]},
+        excluded_embed_metadata_keys=list(hidden),
+        excluded_llm_metadata_keys=list(hidden),
+        start_char_idx=rec["start_char"],
+        end_char_idx=rec["end_char"],
+    )

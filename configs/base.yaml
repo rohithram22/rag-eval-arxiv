@@ -53,6 +53,9 @@ chunking:
 embedding:
   model_name: BAAI/bge-small-en-v1.5
   batch_size: 32
+  max_length: 512
+  # bge was trained with this prefix on QUERIES only (asymmetric retrieval):
+  query_instruction: "Represent this sentence for searching relevant passages: "
 
 retrieval:
   mode: dense          # dense | bm25 | hybrid
@@ -73,6 +76,7 @@ generator:             # answers questions from retrieved context
   max_tokens: 1024     # reasoning model: budget includes its thinking tokens
   extra:               # provider-specific options, passed through to the API
     reasoning_effort: low
+  prompt_version: v1   # see src/rag_eval/prompts.py; versioned because prompts are part of the experiment
 
 qgen:                  # drafts golden-set candidates (Step 5)
   provider: groq

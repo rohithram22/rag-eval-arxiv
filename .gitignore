@@ -21,3 +21,4 @@ indexes/
 # --- OS / editor ---
 .DS_Store
 .vscode/
+logs/
