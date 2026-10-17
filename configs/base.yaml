@@ -84,6 +84,15 @@ qgen:                  # drafts golden-set candidates (Step 5)
   temperature: 0.7
   max_tokens: 2048     # reasoning model: budget includes its thinking tokens
 
+golden:                # Step 5: golden evaluation set
+  n_candidates: 80             # LLM-drafted candidates to review (aim to accept ~45)
+  max_calls: 110               # hard cap on question-generation calls (daily token budget)
+  passage_min_chars: 1200      # source passage size shown to the question generator
+  passage_max_chars: 2400
+  min_interval_s: 15           # pause between calls: ~4/min keeps under Groq's per-minute token limit
+  question_types: [factual, method, numeric, why, definition]
+  prompt_version: qg-v1
+
 judge:                 # scores faithfulness / relevance (Step 6); different family on purpose
   provider: gemini
   model: gemini-3.5-flash-lite
