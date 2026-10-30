@@ -1,0 +1,10 @@
+{"label": "c512-dense", "id": "c076", "judge_model": "gemini-3.5-flash-lite", "judge_prompt": "judge-v1", "agree_correctness": true, "agree_claims": true, "note": ""}
+{"label": "c512-dense", "id": "c010", "judge_model": "gemini-3.5-flash-lite", "judge_prompt": "judge-v1", "agree_correctness": true, "agree_claims": false, "note": "claim 2 (150M to 1.5B example) is actually supported, judge marked it UNSUPPORTED"}
+{"label": "c512-dense", "id": "c001", "judge_model": "gemini-3.5-flash-lite", "judge_prompt": "judge-v1", "agree_correctness": true, "agree_claims": true, "note": ""}
+{"label": "c512-dense", "id": "c101", "judge_model": "gemini-3.5-flash-lite", "judge_prompt": "judge-v1", "agree_correctness": true, "agree_claims": true, "note": ""}
+{"label": "c512-dense", "id": "c027", "judge_model": "gemini-3.5-flash-lite", "judge_prompt": "judge-v1", "agree_correctness": true, "agree_claims": true, "note": ""}
+{"label": "c512-dense", "id": "c025", "judge_model": "gemini-3.5-flash-lite", "judge_prompt": "judge-v1", "agree_correctness": true, "agree_claims": true, "note": ""}
+{"label": "c512-dense", "id": "c024", "judge_model": "gemini-3.5-flash-lite", "judge_prompt": "judge-v1", "agree_correctness": true, "agree_claims": true, "note": "borderline: answer describes the filtering role, not “dynamic relevance between documents”"}
+{"label": "c512-dense", "id": "c011", "judge_model": "gemini-3.5-flash-lite", "judge_prompt": "judge-v1", "agree_correctness": true, "agree_claims": true, "note": ""}
+{"label": "c512-dense", "id": "c009", "judge_model": "gemini-3.5-flash-lite", "judge_prompt": "judge-v1", "agree_correctness": true, "agree_claims": true, "note": "borderline on claim 2: “longer” is inferred from “short, simple questions” in standard QA; the rest is directly supported"}
+{"label": "c512-dense", "id": "c066", "judge_model": "gemini-3.5-flash-lite", "judge_prompt": "judge-v1", "agree_correctness": true, "agree_claims": true, "note": ""}

@@ -97,4 +97,13 @@ judge:                 # scores faithfulness / relevance (Step 6); different fam
   provider: gemini
   model: gemini-3.5-flash-lite
   temperature: 0.0
-  max_tokens: 1024
+  max_tokens: 2048     # room for a claim-by-claim verdict list
+  prompt_version: judge-v1
+
+eval:                  # Step 6: evaluation harness
+  golden_file: golden.jsonl
+  ks: [1, 3, 5]                # hit@k cut-offs (k <= retrieval.top_k)
+  relevance_threshold: 0.5     # chunk is relevant if overlap / min(len(evidence), len(chunk)) >= this
+  generator_min_interval_s: 20 # pause between generator API calls (Groq per-minute token limit)
+  judge_min_interval_s: 5      # pause between judge API calls (Gemini per-minute request limit)
+  bootstrap_samples: 2000      # resamples for 95% confidence intervals
