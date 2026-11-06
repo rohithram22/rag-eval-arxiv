@@ -60,12 +60,15 @@ embedding:
 retrieval:
   mode: dense          # dense | bm25 | hybrid
   top_k: 5             # chunks passed to the LLM
-  candidate_k: 20      # chunks fetched before fusion/reranking
+  candidate_k: 20      # candidates fetched per retriever, fused and/or reranked down to top_k
+  rrf_k: 60            # reciprocal rank fusion constant (hybrid): score = sum 1 / (rrf_k + rank)
+  bm25_stemming: true  # Snowball stemming for BM25 ("retrieved" and "retrieval" -> same stem)
 
 reranker:
   enabled: false
   model_name: cross-encoder/ms-marco-MiniLM-L-6-v2
-  top_n: 5
+  max_length: 512      # query + chunk tokens; longer pairs are truncated at the end of the chunk
+  batch_size: 16
 
 # --- LLM roles (model IDs change on free tiers: run
 #     `python scripts/check_env.py --list-models` and edit here if needed) ---

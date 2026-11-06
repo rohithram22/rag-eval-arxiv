@@ -1,0 +1,176 @@
+{
+  "label": "c256-hybrid-rerank",
+  "mode": "retrieval",
+  "created": "2026-11-05 22:59:29",
+  "n_questions": 63,
+  "n_answerable": 55,
+  "n_unanswerable": 8,
+  "index_key": "4edbfcf53425",
+  "config_hash": "72718c2aeb",
+  "retrieval": {
+    "hit@1": {
+      "mean": 0.5455,
+      "lo": 0.4182,
+      "hi": 0.6727,
+      "n": 55
+    },
+    "hit@3": {
+      "mean": 0.7818,
+      "lo": 0.6727,
+      "hi": 0.8909,
+      "n": 55
+    },
+    "hit@5": {
+      "mean": 0.8545,
+      "lo": 0.7636,
+      "hi": 0.9455,
+      "n": 55
+    },
+    "mrr": {
+      "mean": 0.6636,
+      "lo": 0.5606,
+      "hi": 0.7606,
+      "n": 55
+    },
+    "coverage": {
+      "mean": 0.8545,
+      "lo": 0.7636,
+      "hi": 0.9455,
+      "n": 55
+    },
+    "paper_hit": {
+      "mean": 0.9818,
+      "lo": 0.9455,
+      "hi": 1.0,
+      "n": 55
+    },
+    "pool_hit": {
+      "mean": 0.9273,
+      "lo": 0.8545,
+      "hi": 0.9818,
+      "n": 55
+    }
+  },
+  "latency": {
+    "retrieve_median_s": 1.997
+  },
+  "config": {
+    "project": {
+      "name": "rag-eval-arxiv",
+      "seed": 42
+    },
+    "paths": {
+      "raw_dir": "data/raw",
+      "processed_dir": "data/processed",
+      "index_dir": "indexes",
+      "eval_dir": "eval",
+      "results_dir": "results",
+      "cache_dir": ".cache"
+    },
+    "corpus": {
+      "arxiv_query": "(cat:cs.CL OR cat:cs.IR) AND abs:\"retrieval augmented generation\"",
+      "date_from": "202301010000",
+      "date_to": "202512312359",
+      "max_papers": 150,
+      "candidate_pool": 250,
+      "api_page_size": 50,
+      "api_delay_s": 5.0,
+      "max_pages": 30,
+      "max_pdf_mb": 10,
+      "min_text_chars": 500,
+      "download_delay_s": 3.0,
+      "seed_ids": [
+        "2005.11401",
+        "2004.04906",
+        "2002.08909",
+        "2007.01282",
+        "2112.04426",
+        "2004.12832",
+        "2104.08663",
+        "2212.10496",
+        "2307.03172",
+        "2310.11511",
+        "2309.15217",
+        "2312.10997"
+      ]
+    },
+    "parsing": {
+      "drop_references": true,
+      "header_footer_margin": 0.06
+    },
+    "chunking": {
+      "chunk_size": 256,
+      "chunk_overlap": 32,
+      "include_title": true
+    },
+    "embedding": {
+      "model_name": "BAAI/bge-small-en-v1.5",
+      "batch_size": 32,
+      "max_length": 512,
+      "query_instruction": "Represent this sentence for searching relevant passages: "
+    },
+    "retrieval": {
+      "mode": "hybrid",
+      "top_k": 5,
+      "candidate_k": 20,
+      "rrf_k": 60,
+      "bm25_stemming": true
+    },
+    "reranker": {
+      "enabled": true,
+      "model_name": "cross-encoder/ms-marco-MiniLM-L-6-v2",
+      "max_length": 512,
+      "batch_size": 16
+    },
+    "generator": {
+      "provider": "groq",
+      "model": "openai/gpt-oss-20b",
+      "temperature": 0.0,
+      "max_tokens": 1024,
+      "extra": {
+        "reasoning_effort": "low"
+      },
+      "prompt_version": "v1"
+    },
+    "qgen": {
+      "provider": "groq",
+      "model": "openai/gpt-oss-120b",
+      "temperature": 0.7,
+      "max_tokens": 2048
+    },
+    "golden": {
+      "n_candidates": 80,
+      "max_calls": 110,
+      "passage_min_chars": 1200,
+      "passage_max_chars": 2400,
+      "min_interval_s": 15,
+      "question_types": [
+        "factual",
+        "method",
+        "numeric",
+        "why",
+        "definition"
+      ],
+      "prompt_version": "qg-v1"
+    },
+    "judge": {
+      "provider": "gemini",
+      "model": "gemini-3.5-flash-lite",
+      "temperature": 0.0,
+      "max_tokens": 2048,
+      "prompt_version": "judge-v1"
+    },
+    "eval": {
+      "golden_file": "golden.jsonl",
+      "ks": [
+        1,
+        3,
+        5
+      ],
+      "relevance_threshold": 0.5,
+      "generator_min_interval_s": 20,
+      "judge_min_interval_s": 5,
+      "bootstrap_samples": 2000
+    }
+  }
+}

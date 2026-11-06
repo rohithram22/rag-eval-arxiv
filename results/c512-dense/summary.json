@@ -1,12 +1,12 @@
 {
   "label": "c512-dense",
   "mode": "full",
-  "created": "2026-10-30 01:27:13",
+  "created": "2026-11-06 19:55:28",
   "n_questions": 63,
   "n_answerable": 55,
   "n_unanswerable": 8,
   "index_key": "bd304f760eac",
-  "config_hash": "dc8f0e0bc6",
+  "config_hash": "196b406118",
   "retrieval": {
     "hit@1": {
       "mean": 0.4364,
@@ -43,10 +43,16 @@
       "lo": 0.9091,
       "hi": 1.0,
       "n": 55
+    },
+    "pool_hit": {
+      "mean": 0.8909,
+      "lo": 0.8,
+      "hi": 0.9636,
+      "n": 55
     }
   },
   "latency": {
-    "retrieve_median_s": 0.04,
+    "retrieve_median_s": 0.046,
     "generate_median_s": 0.619,
     "generate_timed_n": 51
   },
@@ -108,12 +114,15 @@
     "retrieval": {
       "mode": "dense",
       "top_k": 5,
-      "candidate_k": 20
+      "candidate_k": 20,
+      "rrf_k": 60,
+      "bm25_stemming": true
     },
     "reranker": {
       "enabled": false,
       "model_name": "cross-encoder/ms-marco-MiniLM-L-6-v2",
-      "top_n": 5
+      "max_length": 512,
+      "batch_size": 16
     },
     "generator": {
       "provider": "groq",

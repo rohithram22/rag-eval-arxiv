@@ -21,7 +21,7 @@ from rag_eval.pipeline import RAGPipeline
 from rag_eval.prompts import format_context
 from rag_eval.stats import bootstrap_ci
 
-RETRIEVAL_METRICS = ["hit@1", "hit@3", "hit@5", "mrr", "coverage", "paper_hit"]
+RETRIEVAL_METRICS = ["hit@1", "hit@3", "hit@5", "mrr", "coverage", "paper_hit", "pool_hit"]
 GENERATION_METRICS = ["correctness", "faithfulness", "relevance"]
 
 
@@ -49,6 +49,10 @@ def evaluate_item(rag: RAGPipeline, item: dict, cfg: dict, retrieval_only: bool)
            "t_retrieve": round(t_retrieve, 3)}
     if item["answerable"]:
         row.update(retrieval_metrics(chunks, item, e["ks"], e["relevance_threshold"]))
+        # Candidate pool (before cutting to top_k / reranking): the reranker's ceiling.
+        pool = _chunk_view(getattr(rag.retriever, "last_candidates", []) or results)
+        pool_rank = retrieval_metrics(pool, item, [], e["relevance_threshold"])["first_relevant_rank"]
+        row.update(pool_rank=pool_rank, pool_hit=float(pool_rank is not None), pool_size=len(pool))
     if retrieval_only:
         return row
 
@@ -143,8 +147,10 @@ def format_summary(s: dict) -> str:
     lines = [f"\n=========== {s['label']} ({s['mode']}) ===========",
              f"questions: {s['n_questions']} ({s['n_answerable']} answerable, {s['n_unanswerable']} unanswerable)",
              "RETRIEVAL (answerable only)          mean   95% CI"]
+    pool_k = s["config"]["retrieval"]["candidate_k"]
+    names = {"pool_hit": f"pool_hit@{pool_k} (candidates)"}
     for m, v in s["retrieval"].items():
-        lines.append(f"  {m:<32} {fmt(v)}")
+        lines.append(f"  {names.get(m, m):<32} {fmt(v)}")
     if "generation" in s:
         g = s["generation"]
         lines.append("GENERATION")
