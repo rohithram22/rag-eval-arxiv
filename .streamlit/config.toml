@@ -1,0 +1,4 @@
+[server]
+# Streamlit's file watcher inspects every imported module; with transformers' lazy imports
+# that triggers (harmless) tracebacks for vision models that need torchvision.
+fileWatcherType = "none"
