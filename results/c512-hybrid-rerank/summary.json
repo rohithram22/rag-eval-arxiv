@@ -1,7 +1,7 @@
 {
   "label": "c512-hybrid-rerank",
-  "mode": "retrieval",
-  "created": "2026-11-05 23:08:27",
+  "mode": "full",
+  "created": "2026-11-06 20:34:12",
   "n_questions": 63,
   "n_answerable": 55,
   "n_unanswerable": 8,
@@ -52,7 +52,9 @@
     }
   },
   "latency": {
-    "retrieve_median_s": 4.252
+    "retrieve_median_s": 4.104,
+    "generate_median_s": 0.607,
+    "generate_timed_n": 63
   },
   "config": {
     "project": {
@@ -172,5 +174,39 @@
       "judge_min_interval_s": 5,
       "bootstrap_samples": 2000
     }
+  },
+  "generation": {
+    "correctness": {
+      "mean": 0.9636,
+      "lo": 0.9182,
+      "hi": 1.0,
+      "n": 55
+    },
+    "faithfulness": {
+      "mean": 0.9809,
+      "lo": 0.9562,
+      "hi": 1.0,
+      "n": 54
+    },
+    "relevance": {
+      "mean": 0.9907,
+      "lo": 0.9769,
+      "hi": 1.0,
+      "n": 54
+    },
+    "false_abstention": {
+      "mean": 0.0182,
+      "lo": 0.0,
+      "hi": 0.0545,
+      "n": 55
+    },
+    "unanswerable_abstention": {
+      "mean": 1.0,
+      "lo": 1.0,
+      "hi": 1.0,
+      "n": 8
+    },
+    "n_judged": 54,
+    "judge_errors": 0
   }
 }

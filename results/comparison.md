@@ -4,9 +4,9 @@
 
 | config | stage | hit@1 | hit@5 | MRR | pool hit@20 | correctness | faithfulness | false abst. | unans. abst. | retrieve s |
 |---|---|---|---|---|---|---|---|---|---|---|
-| c512-hybrid-rerank | retrieval | 0.618 | 0.909 | 0.732 | 0.982 | - | - | - | - | 4.252 |
-| c512-bm25 | retrieval | 0.582 | 0.873 | 0.690 | 0.982 | - | - | - | - | 0.001 |
-| c512-dense-rerank | retrieval | 0.564 | 0.855 | 0.678 | 0.891 | - | - | - | - | 4.222 |
+| c512-hybrid-rerank | full | 0.618 | 0.909 | 0.732 | 0.982 | 0.964 | 0.981 | 0.018 | 1.000 | 4.104 |
+| c512-bm25 | full | 0.582 | 0.873 | 0.690 | 0.982 | 0.982 | 0.969 | 0.000 | 1.000 | 0.001 |
+| c512-dense-rerank | full | 0.564 | 0.855 | 0.678 | 0.891 | 0.927 | 0.976 | 0.054 | 1.000 | 4.135 |
 | c256-hybrid-rerank | retrieval | 0.545 | 0.855 | 0.664 | 0.927 | - | - | - | - | 1.997 |
 | c512-hybrid | retrieval | 0.527 | 0.855 | 0.654 | 0.982 | - | - | - | - | 0.039 |
 | c256-dense-rerank | retrieval | 0.527 | 0.782 | 0.632 | 0.873 | - | - | - | - | 2.076 |
@@ -57,8 +57,14 @@
 
 ## Finalists (rule: top 3 by mrr, ties by hit@5, excluding the baseline)
 
-- c512-hybrid-rerank (needs a full run)
-- c512-bm25 (needs a full run)
-- c512-dense-rerank (needs a full run)
+- c512-hybrid-rerank (full results available)
+- c512-bm25 (full results available)
+- c512-dense-rerank (full results available)
 
-Run: `python scripts/run_experiments.py --stage full --labels c512-hybrid-rerank c512-bm25 c512-dense-rerank`
+## End-to-end vs baseline c512-dense (B - A, paired bootstrap 95% CI)
+
+| config | correctness | faithfulness | hit@5 | MRR |
+|---|---|---|---|---|
+| c512-hybrid-rerank | +0.109 [+0.027, +0.209]* P(B>A)=0.99 | +0.029 [-0.014, +0.085]  P(B>A)=0.88 | +0.218 [+0.091, +0.345]* P(B>A)=1.00 | +0.205 [+0.082, +0.326]* P(B>A)=1.00 |
+| c512-bm25 | +0.127 [+0.036, +0.227]* P(B>A)=1.00 | +0.016 [-0.048, +0.085]  P(B>A)=0.68 | +0.182 [+0.054, +0.309]* P(B>A)=1.00 | +0.163 [+0.038, +0.276]* P(B>A)=1.00 |
+| c512-dense-rerank | +0.073 [+0.000, +0.154]  P(B>A)=0.97 | +0.034 [-0.003, +0.085]  P(B>A)=0.95 | +0.164 [+0.054, +0.273]* P(B>A)=1.00 | +0.151 [+0.045, +0.257]* P(B>A)=1.00 |
